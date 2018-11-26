@@ -1,0 +1,57 @@
+.home {
+  &__header {
+    // Box Model
+    height: 80px;
+    width: 100%;
+
+    // Visual
+    background-color: green;
+
+    // Typography
+    font-size: 28px;
+    color: #fff;
+    text-align: center;
+  }
+
+  &__search-link {
+    // Position
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 10;
+
+    // Box Model
+    width: 50px;
+    height: 50px;
+    display: block;
+
+    // Visual
+    border-radius: 50%;
+    background-color: green;
+    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.5);
+
+    span {
+      // Position
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      // Box Model
+      width: 25px;
+      height: 4px;
+      margin: auto;
+      display: block;
+
+      // Visual
+      background-color: #fff;
+      border-radius: 3px;
+
+      &:nth-child(2) {
+        // Visual
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

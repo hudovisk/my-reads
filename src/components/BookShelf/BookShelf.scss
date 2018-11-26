@@ -1,0 +1,49 @@
+.book-shelf {
+  // Box Model
+  display: block;
+  width: 100%;
+
+  h2 {
+    // Box Model
+    width: 100%;
+
+    // Visual
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  }
+
+  ul {
+    // Box Model
+    display: flex;
+    flex-wrap: wrap;
+
+    // Visual
+    list-style: none;
+
+    li {
+      margin: 10px;
+    }
+  }
+}
+
+.book-transition {
+  &--fade {
+    @mixin base-fade-animation {
+      transition: opacity 0.3s ease;
+    }
+
+    &-enter {
+      @include base-fade-animation();
+      opacity: 0;
+    }
+
+    &-enter-active {
+      @include base-fade-animation();
+      opacity: 1;
+    }
+
+    &-exit {
+      @include base-fade-animation();
+      opacity: 0;
+    }
+  }
+}

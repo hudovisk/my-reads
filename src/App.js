@@ -1,28 +1,34 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
+
+import "./App.scss";
+import withSuspense from "./components/withSuspense";
+
+const LazySearchPage = lazy(() => import(/* webpackChunkName: 'search' */ "./pages/SearchPage"));
+const SearchPage = withSuspense(LazySearchPage);
+
+export default () => (
+  <Router>
+    <Route
+      render={({ location }) => (
+        <TransitionGroup>
+          <CSSTransition
+            key={location.key}
+            classNames="page-transition--fade"
+            timeout={300}
           >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
-
-export default App;
+            <Switch location={location}>
+              <Route exact path="/search" component={SearchPage} />
+              <Route exact path="/" component={HomePage} />
+              <Route component={NotFoundPage} />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
+      )}
+    />
+  </Router>
+);

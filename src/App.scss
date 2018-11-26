@@ -1,0 +1,26 @@
+.page-transition {
+  &--fade {
+    @mixin base-fade-animation {
+      width: 100vw;
+      display: absolute;
+
+      transition: opacity 0.3s ease;
+    }
+
+    &-enter {
+      @include base-fade-animation();
+      opacity: 0;
+    }
+
+    &-enter-active {
+      @include base-fade-animation();
+      opacity: 1;
+    }
+
+    &-exit {
+      @include base-fade-animation();
+      opacity: 0;
+      display: none;
+    }
+  }
+}
