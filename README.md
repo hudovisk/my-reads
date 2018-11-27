@@ -1,3 +1,10 @@
+# My-Reads
+This project is part of Udacity Advanced Front-End Nanodegree.
+
+This project uses the new hook api along with the new APIs for code splitting (React.lazy and Suspense).
+Info about React new proposals: https://reactjs.org/blog/2018/11/13/react-conf-recap.html
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
