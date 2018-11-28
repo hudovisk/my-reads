@@ -24,8 +24,6 @@ export default function fetchApi(path, options = {}) {
     }
   };
 
-  console.log(opt);
-
   const endpoint = api.concat(path);
   return fetch(endpoint, opt).then(response =>
     response.json().then(body => {

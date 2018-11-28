@@ -5,7 +5,7 @@ import Book from "../Book";
 
 import "./BookShelf.scss";
 
-export default ({ className, books, title, onBookUpdate, ...rest }) => (
+const BookShelf = ({ className, books, title, onBookUpdate, ...rest }) => (
   <section className={cx("book-shelf", className)}>
     <h2>{title}</h2>
     <ul>
@@ -25,3 +25,5 @@ export default ({ className, books, title, onBookUpdate, ...rest }) => (
     </ul>
   </section>
 );
+
+export default BookShelf;

@@ -1,34 +1,16 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import BookShelf from "../../components/BookShelf";
-import { getAll as getAllBooks, update as updateBook } from "../../api/books";
 
 import "./HomePage.scss";
+import { BooksState, BooksDispatch } from "../../hooks/useBooksReducer";
 
-const shelfFilter = shelf => book => book.shelf === shelf;
-
-export default () => {
-  const [books, setBooks] = useState([]);
-  const currentlyReadingBooks = useMemo(
-    () => books.filter(shelfFilter("currentlyReading")),
-    [books]
+const HomePage = () => {
+  const { currentlyReadingBooks, wantToReadBooks, readBooks } = useContext(
+    BooksState
   );
-  const wantToReadBooks = useMemo(
-    () => books.filter(shelfFilter("wantToRead")),
-    [books]
-  );
-  const readBooks = useMemo(() => books.filter(shelfFilter("read")), [books]);
-
-  useEffect(() => {
-    getAllBooks().then(setBooks);
-  }, []); // Need the empty brackets to avoid infinit loop
-
-  const handleBookUpdate = (book, shelf) => {
-    updateBook(book, shelf)
-      .then(getAllBooks)
-      .then(setBooks);
-  };
+  const { updateBook } = useContext(BooksDispatch);
 
   return (
     <div className="home">
@@ -43,19 +25,17 @@ export default () => {
         <BookShelf
           title={"Currently Reading"}
           books={currentlyReadingBooks}
-          onBookUpdate={handleBookUpdate}
+          onBookUpdate={updateBook}
         />
         <BookShelf
           title={"Want to Read"}
           books={wantToReadBooks}
-          onBookUpdate={handleBookUpdate}
+          onBookUpdate={updateBook}
         />
-        <BookShelf
-          title={"Read"}
-          books={readBooks}
-          onBookUpdate={handleBookUpdate}
-        />
+        <BookShelf title={"Read"} books={readBooks} onBookUpdate={updateBook} />
       </main>
     </div>
   );
 };
+
+export default HomePage;

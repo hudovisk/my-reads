@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from "react";
-import _debounce from "lodash/debounce";
+import React, { useState, useEffect, useContext } from "react";
 import { withRouter } from "react-router-dom";
-
-import { search, update as updateBook } from "../../api/books";
 
 import "./SearchPage.scss";
 import Book from "../../components/Book";
+import { BooksState, BooksDispatch } from "../../hooks/useBooksReducer";
 
-const searchDebounced = _debounce(search, 500, { leading: true });
 
 const SearchPage = ({ history }) => {
   const [search, setSearch] = useState("");
-  const [result, setResult] = useState([]);
+  const { searchResults } = useContext(BooksState);
+  const { updateBook, searchBooks } = useContext(BooksDispatch);
 
   useEffect(
-    () => {
-      if (search) {
-        searchDebounced(search)
-          .then(setResult)
-          .catch(() => setResult([]));
-      }
-    },
+    () => searchBooks(search),
     [search]
   );
 
@@ -39,7 +31,7 @@ const SearchPage = ({ history }) => {
       </header>
 
       <ul className="search__list">
-        {result.map(book => (
+        {searchResults.map(book => (
           <li key={book.id}>
             <Book book={book} onUpdate={handleBookUpdate(book)} />
           </li>
