@@ -1,5 +1,4 @@
-import React, { useReducer, useMemo, useEffect } from "react";
-import createSagaMiddleware from "redux-saga";
+import React, { useEffect } from "react";
 import {
   booksReducer,
   initialState,
@@ -10,30 +9,20 @@ import {
   getSearchBooks
 } from "../redux/books/books-reducer";
 import booksSagas from "../redux/books/books-sagas";
-import applyMiddleware from "../redux/applyMiddleware";
 import {
   initBooks,
   syncBooks,
   updateBook,
   searchBooks
 } from "../redux/books/books-actions";
-import logger from "../redux/logger";
-
-const sagaMiddleware = createSagaMiddleware();
+import { useReducerAndSaga } from "./useReducerAndSaga";
 
 export default function() {
-  let [state, dispatch] = useReducer(booksReducer, initialState);
-  dispatch = useMemo(() => {
-    let dispatchWithMiddleware = applyMiddleware(
-      dispatch,
-      logger,
-      sagaMiddleware
-    );
-
-    sagaMiddleware.run(booksSagas);
-
-    return dispatchWithMiddleware;
-  }, []);
+  const [state, dispatch] = useReducerAndSaga(
+    booksReducer,
+    initialState,
+    booksSagas
+  );
 
   // Initialize books
   useEffect(() => {
